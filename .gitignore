@@ -1,0 +1,25 @@
+#global secret or variables
+/todoBackend/config
+
+
+# dependencies
+todo_frontend/node_modules
+todo_frontend/.pnp
+todo_frontend/.pnp.js
+
+# testing
+todo_frontend/coverage
+
+# production
+todo_frontend/build
+
+# misc
+todo_frontend/.DS_Store
+todo_frontend/.env.local
+todo_frontend/.env.development.local
+todo_frontend/.env.test.local
+todo_frontend/.env.production.local
+
+todo_frontend/npm-debug.log*
+todo_frontend/yarn-debug.log*
+todo_frontend/yarn-error.log*
