@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import TodoItem from "./TodoItem";
 import AddTodo from "./AddTodo";
 import "./TodoList.css";
+import * as apiCalls from  '../api';
+import axios from 'axios';
 
 class TodoList extends Component {
   constructor(props) {
@@ -14,24 +16,25 @@ class TodoList extends Component {
   }
 
   componentWillMount() {
-    fetch("/api/todos")
-      .then((data) => {
-        if (!data.ok) {
-          if (data.status >= 400 && data.status < 500) {
-            return data.json().then((data) => {
-              let err = { errorMessage: data.messsage };
-              throw err;
-            });
-          } else {
-            let err = {
-              errorMessage: "Server not responding. Please try later.",
-            };
+    axios 
+    return fetch("/api/todos")
+    .then((data) => {
+      if (!data.ok) {
+        if (data.status >= 400 && data.status < 500) {
+          return data.json().then((data) => {
+            let err = { errorMessage: data.messsage };
             throw err;
-          }
+          });
+        } else {
+          let err = {
+            errorMessage: "Server not responding. Please try later.",
+          };
+          throw err;
         }
-        return data.json();
-      })
-      .then((todos) => this.setState({ todos }));
+      }
+      return data.json();
+    })
+      this.setState({ todos });
   }
 
   addTodo(val) {
