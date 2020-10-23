@@ -21,6 +21,8 @@ class AddTodo extends Component {
   render() {
     return (
       <div>
+      <form>
+      <label htmlFor="todo">New Todo</label>
         <input
           type="text"
           value={this.state.inputValue}
@@ -28,6 +30,7 @@ class AddTodo extends Component {
           placeholder="Enter a task..."
         />
         <button onClick={this.handleSubmit}>Add Todo</button>
+        </form>
       </div>
     );
   }

@@ -9,6 +9,7 @@ class TodoList extends Component {
       todos: [],
     };
     this.addTodo = this.addTodo.bind(this);
+    this.updateTodo = this.updateTodo.bind(this);
   }
 
   componentWillMount() {
@@ -88,9 +89,11 @@ class TodoList extends Component {
   }
 
   toggleTodo(todo) {
-    console.log(todo._id, todo.completed);
     fetch(`/api/todos/${todo._id}`, {
       method: "put",
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
       body: JSON.stringify({ completed: !todo.completed }),
     })
       .then((res) => {
@@ -119,6 +122,41 @@ class TodoList extends Component {
       });
   }
 
+  updateTodo(_id, updatedName) {
+    fetch(`/api/todos/${_id}`, {
+      method: "put",
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+      body: JSON.stringify({ name: updatedName }),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          if (res.status >= 400 && res.status < 500) {
+            return res.json().then((res) => {
+              let err = { errorMessage: res.messsage };
+              throw err;
+            });
+          } else {
+            let err = {
+              errorMessage: "Server not responding. Please try later.",
+            };
+            throw err;
+          }
+        }
+        return res.json();
+      })
+      .then((updatedTodo) => {
+        const updatedTodos = this.state.todos.map((todo) =>{
+          if(todo._id === updatedTodo._id){
+            return { ...todo, name: updatedName }
+          }
+            return todo;
+        });
+        this.setState({ todos: updatedTodos });
+      });
+  }
+
   render() {
     const todos = this.state.todos.map((todo) => (
       <TodoItem
@@ -126,6 +164,8 @@ class TodoList extends Component {
         {...todo}
         onDelete={this.deleteTodo.bind(this, todo._id)}
         onToggle={this.toggleTodo.bind(this, todo)}
+        updateTodo={this.updateTodo}
+        
       />
     ));
     return (
