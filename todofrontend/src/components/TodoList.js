@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import TodoItem from "./TodoItem";
 import AddTodo from "./AddTodo";
+import "./TodoList.css";
 
 class TodoList extends Component {
   constructor(props) {
@@ -169,8 +170,8 @@ class TodoList extends Component {
       />
     ));
     return (
-      <div>
-        <h1 className="display-5">Todo List</h1>
+      <div className="TodoList">
+        <h1 >A Simple List<span>Fullstack React Express Mongo Todo App</span> </h1>
         <AddTodo addTodo={this.addTodo} />
         <ul style={{ listStyleType: "none" }}>{todos}</ul>
       </div>

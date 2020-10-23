@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import './Todo.css';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 class TodoItem extends Component {
   constructor(props){
@@ -33,7 +35,7 @@ class TodoItem extends Component {
     let result;
     if(this.state.isEditing){
       result = (
-        <div>
+        <div className="Todo">
           <form onSubmit={this.handleSubmit}>
             <input type="text" value={this.state.name} onChange={this.handleChange} name="name"/>
             <button>Save</button>
@@ -42,7 +44,7 @@ class TodoItem extends Component {
       ) 
     } else {
       result = (
-        <div>
+        <div className="Todo">
           <li>
             <span
                 onClick={this.props.onToggle}
@@ -50,8 +52,10 @@ class TodoItem extends Component {
               >
                 {this.props.name} {" "} {due_date}
               </span>{" "}
-              <button onClick={this.toggleForm}>Edit</button>
-              <span onClick={this.props.onDelete}> X </span>
+              <span onClick={this.toggleForm}>
+                <FontAwesomeIcon icon="pen-alt" className="icon pen-alt" />
+              </span>
+              <span onClick={this.props.onDelete}><FontAwesomeIcon icon="trash" className="icon trash" /></span>
           </li>
         </div>
       )
