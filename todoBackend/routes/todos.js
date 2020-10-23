@@ -3,7 +3,6 @@ const router = express.Router();
 const db = require("../models/db");
 
 router.get("/", function (req, res) {
-  //res.send("HELLO FROM THE TODOS ROUTES");
   db.Todo.find()
     .then(function (todos) {
       res.json(todos);
@@ -33,6 +32,16 @@ router.get("/:todoId", function (req, res) {
     });
 });
 
+router.patch("/:todoId", function (req, res) {
+  db.Todo.findOneAndUpdate({ _id: req.params.todoId }, req.body, { new: true })
+    .then(function (todo) {
+      res.json(todo);
+    })
+    .catch(function (err) {
+      res.send(err);
+    });
+});
+
 router.put("/:todoId", function (req, res) {
   db.Todo.findOneAndUpdate({ _id: req.params.todoId }, req.body, { new: true })
     .then(function (todo) {
@@ -42,6 +51,8 @@ router.put("/:todoId", function (req, res) {
       res.send(err);
     });
 });
+
+
 
 router.delete("/:todoId", function (req, res) {
   db.Todo.remove({ _id: req.params.todoId })

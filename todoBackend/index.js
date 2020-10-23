@@ -13,14 +13,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(morgan("dev"));
 
+//only for development. Visual cue if todo routes aren't accessed
 app.get("/", function (req, res) {
   res.send("This is the ROOT ROUTE");
 });
 
 //file path to routes folder for todos routes file
 const todoRoutes = require("./routes/todos");
+
 app.use("/api/todos", todoRoutes);
 
+//to start use commands: 'npx nodemon' or 'node index.js'
 app.listen(PORT, function () {
   console.log(
     `App is running and listening intently on PORT ${PORT} and IP ${IP}`
