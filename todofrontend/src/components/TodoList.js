@@ -170,7 +170,7 @@ class TodoList extends Component {
     ));
     return (
       <div>
-        <h1>Todo List</h1>
+        <h1 className="display-5">Todo List</h1>
         <AddTodo addTodo={this.addTodo} />
         <ul style={{ listStyleType: "none" }}>{todos}</ul>
       </div>

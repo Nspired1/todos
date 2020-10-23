@@ -1,33 +1,10 @@
 import React, { Component } from "react";
 
-
-// function TodoItem({ name, completed, created_date, onDelete, onToggle, onEdit }) {
-//   const due_date = created_date.slice(0, 10).split(":");
-//   return (
-//     <div>
-//       <li>
-//         <span
-//           onClick={onToggle}
-//           style={{ textDecoration: completed ? "line-through" : "none" }}
-//         >
-//           {name} {due_date}{" "}
-//         </span>{" "}
-//         <EditTodo name={name} handleEdit={onEdit}/>
-//         <span onClick={onDelete}> X </span>
-//       </li>
-//     </div>
-//   );
-// }
-
 class TodoItem extends Component {
   constructor(props){
     super(props);
     this.state = {
       name : this.props.name,
-      //completed : this.props.completed,
-      //created_date : this.props.created_date,
-      //onDelete : this.props.onDelete,
-      //onToggle : this.props.onToggle,
       isEditing: false
     }
     this.toggleForm = this.toggleForm.bind(this);
@@ -51,7 +28,6 @@ class TodoItem extends Component {
     })
   }
 
-  
   render(){
     let due_date = this.props.created_date.slice(0, 10).split(":");
     let result;
@@ -67,30 +43,22 @@ class TodoItem extends Component {
     } else {
       result = (
         <div>
-        <li>
-        <span
-            onClick={this.props.onToggle}
-            style={{ textDecoration: this.props.completed ? "line-through" : "none" }}
-          >
-            {this.props.name} {" "} {due_date}
-          </span>{" "}
-         <button onClick={this.toggleForm}>Edit</button>
-          <span onClick={this.props.onDelete}> X </span>
-        </li>
-  
+          <li>
+            <span
+                onClick={this.props.onToggle}
+                style={{ textDecoration: this.props.completed ? "line-through" : "none" }}
+              >
+                {this.props.name} {" "} {due_date}
+              </span>{" "}
+              <button onClick={this.toggleForm}>Edit</button>
+              <span onClick={this.props.onDelete}> X </span>
+          </li>
         </div>
       )
     }
-    return (
-      result
-    )
+    return result
   }
 
   }
-
-
-
-
-
 
 export default TodoItem;
