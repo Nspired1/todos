@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import TodoItem from "./TodoItem";
 import AddTodo from "./AddTodo";
 import "./TodoList.css";
-import * as apiCalls from  '../api';
 import axios from 'axios';
 
 class TodoList extends Component {
@@ -15,77 +14,24 @@ class TodoList extends Component {
     this.updateTodo = this.updateTodo.bind(this);
   }
 
-  componentWillMount() {
-    axios 
-    return fetch("/api/todos")
-    .then((data) => {
-      if (!data.ok) {
-        if (data.status >= 400 && data.status < 500) {
-          return data.json().then((data) => {
-            let err = { errorMessage: data.messsage };
-            throw err;
-          });
-        } else {
-          let err = {
-            errorMessage: "Server not responding. Please try later.",
-          };
-          throw err;
-        }
-      }
-      return data.json();
-    })
-      this.setState({ todos });
+  // GET request for ALL todos
+  componentWillMount(){
+    axios
+      .get(`/api/todos/`)
+      .then( res => this.setState({ todos: res.data }))
   }
 
   addTodo(val) {
-    fetch("/api/todos/", {
-      method: "post",
-      headers: new Headers({
-        "Content-Type": "application/json",
-      }),
-      body: JSON.stringify({ name: val }),
-    })
-      .then((data) => {
-        if (!data.ok) {
-          if (data.status >= 400 && data.status < 500) {
-            return data.json().then((data) => {
-              let err = { errorMessage: data.messsage };
-              throw err;
-            });
-          } else {
-            let err = {
-              errorMessage: "Server not responding. Please try later.",
-            };
-            throw err;
-          }
-        }
-        return data.json();
-      })
+    axios
+      .post("/api/todos/", { name: val})
       .then((newTodo) =>
         this.setState({ todos: [...this.state.todos, newTodo] })
       );
   }
 
   deleteTodo(id) {
-    fetch(`/api/todos/${id}`, {
-      method: "delete",
-    })
-      .then((res) => {
-        if (!res.ok) {
-          if (res.status >= 400 && res.status < 500) {
-            return res.json().then((res) => {
-              let err = { errorMessage: res.messsage };
-              throw err;
-            });
-          } else {
-            let err = {
-              errorMessage: "Server not responding. Please try later.",
-            };
-            throw err;
-          }
-        }
-        return res.json();
-      })
+    axios
+      .delete(`/api/todos/${id}`)
       .then(() => {
         const todos = this.state.todos.filter((todo) => todo._id !== id);
         this.setState({ todos: todos });
@@ -93,6 +39,16 @@ class TodoList extends Component {
   }
 
   toggleTodo(todo) {
+    // axios
+    //   .put(`/api/todos/${todo._id}`, { completed: !todo.completed })
+    //    .then((toggledTodo) => {
+    //     const updatedTodos = this.state.todos.map((todo) =>
+    //     todo._id === toggledTodo._id
+    //       ? { ...todo, completed: !todo.completed }
+    //       : todo
+    //   );
+    //   this.setState({ todos: updatedTodos });
+    // });
     fetch(`/api/todos/${todo._id}`, {
       method: "put",
       headers: new Headers({
